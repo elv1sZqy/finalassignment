@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+spring:
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
+    static-path-pattern: /static/**
+
+  elasticsearch:
+    bboss:
+      elasticUser: xxx
+      elasticPassword: xxx
+      elasticsearch:
+        rest:
+          hostNames: 192.168.50.111:9200
+        dateFormat: yyyy.MM.dd
+        timeZone: Asia/Shanghai
+        ttl: 2d
+        showTemplate: true
+        discoverHost: false
+
+
+elasticsearch:
+  userName: root
+  password: root
+  hosts:
+    -
+      ip: 192.168.50.111
+      port: 9200

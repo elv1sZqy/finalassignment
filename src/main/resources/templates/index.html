@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>HostSpace</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="HostSpace template project">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/styles/bootstrap-4.1.2/bootstrap.min.css">
+    <link href="../static/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="../static/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="../static/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="../static/plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="../static/styles/main_styles.css">
+    <link rel="stylesheet" type="text/css" href="../static/styles/responsive.css">
+
+    <!--在线JQ-->
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+
+    <!--我的JS基本都在这个里面-->
+    <script src="../static/js/my.js"></script>
+
+    <script src="../static/js/custom.js"></script>
+    <script src="../static/js/index.js"></script>
+    <script src="../static/styles/bootstrap-4.1.2/popper.js"></script>
+    <script src="../static/styles/bootstrap-4.1.2/bootstrap.min.js"></script>
+    <script src="../static/plugins/greensock/TweenMax.min.js"></script>
+    <script src="../static/plugins/greensock/TimelineMax.min.js"></script>
+    <script src="../static/plugins/scrollmagic/ScrollMagic.min.js"></script>
+    <script src="../static/plugins/greensock/animation.gsap.min.js"></script>
+    <script src="../static/plugins/greensock/ScrollToPlugin.min.js"></script>
+    <script src="../static/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="../static/plugins/easing/easing.js"></script>
+    <script src="../static/plugins/progressbar/progressbar.min.js"></script>
+    <script src="../static/plugins/parallax-js-master/parallax.min.js"></script>
+    <script src="../static/plugins/colorbox/jquery.colorbox-min.js"></script>
+</head>
+<body>
+<div class="super_container">
+
+    <!-- Header -->
+    <header class="header trans_400">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="header_content d-flex flex-row align-items-center justify-content-start trans_400">
+                        <div class="logo"><a href="#">Sou<span>Shi</span></a></div>
+                        <div class="hamburger ml-auto"><i class="fa fa-bars" aria-hidden="true"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- 搜索框那一块 -->
+    <div class="home">
+        <div class="home_background"></div>
+        <div class="background_image background_city" style="background-image:url(../static/images/city.png)"></div>
+        <div class="cloud cloud_1"><img src="../static/images/cloud.png" alt=""></div>
+        <div class="cloud cloud_2"><img src="../static/images/cloud.png" alt=""></div>
+        <div class="cloud cloud_3"><img src="../static/images/cloud_full.png" alt=""></div>
+        <div class="cloud cloud_4"><img src="../static/images/cloud.png" alt=""></div>
+        <div class="home_container">
+            <div class="container">
+                <!-- 搜索框上的字-->
+                <div class="row">
+                    <div class="col">
+                        <div class="home_content text-center">
+                            <div class="home_title">The Best Search Website</div>
+                            <div class="home_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                                malesuada lorem maximus mauris scelerisque, at rutrum nulla dictum. Ut ac ligula sapien.
+                                Suspendisse cursus faucibus finibus.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--搜索框-->
+                <div class="row">
+                    <div class="col-lg-10 offset-lg-1">
+                        <div class="domain_search_form_container">
+                            <form action="#" id="domain_search_form"
+                                  class="domain_search_form d-flex flex-md-row flex-column align-items-center justify-content-start">
+                                <div class="d-flex flex-row align-items-center justify-content-start">
+                                    <input type="text" autocomplete="off" class="domain_search_input" placeholder="输入你想搜的关键字"
+                                           id="searchInput" oninput="reminder()"
+                                           required="required">
+                                    <div class="domain_search_dropdown d-flex flex-row align-items-center justify-content-start">
+                                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                        <div class="domain_search_selected" id="dynasty" onchange="reminder()">全部</div>
+                                        <ul>
+                                            <li>全部</li>
+                                            <li>唐</li>
+                                            <li>宋</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <button class="domain_search_button d-flex flex-row align-items-center justify-content-center"
+                                        onclick="goSearch();return false;">
+                                    <img src="../static/images/search.png" alt="">Search
+                                </button>
+                            </form>
+                        </div>
+                        <!--快速查看-->
+                        <div class="myContainer myCollapse" id="reminder" style="margin-top :1px; width: 582px">
+
+                        </div>
+                        <!--快速查看-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pricing -->
+    <div class="pricing" id="result" style="display:none;">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="pricing_container d-flex flex-row align-items-start justify-content-start flex-wrap"
+                         id="poems">
+                        <!--用于展示搜索结果的-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Intro -->
+    <div class="intro">
+        <div class="container">
+            <div class="row">
+                <div class="col magic_fade_in">
+                    <div class="section_title text-center"><h2>How to get started</h2></div>
+                </div>
+            </div>
+            <div class="row intro_row">
+                <div class="intro_dots magic_fade_in" style="background-image:url(../static/images/dots.png)"></div>
+
+                <!-- Intro Item -->
+                <div class="col-lg-4 intro_col magic_fade_in">
+                    <div class="intro_item d-flex flex-column align-items-center justify-content-start text-center">
+                        <div class="intro_icon_container d-flex flex-column align-items-center justify-content-center">
+                            <div class="intro_icon"><img src="../static/images/icon_1.svg"
+                                                         alt="https://www.flaticon.com/authors/freepik"></div>
+                        </div>
+                        <div class="intro_item_content">
+                            <div class="intro_item_title">Buy your Domain</div>
+                            <div class="intro_item_text">
+                                <p>Nullam lacinia ex eleifend orci porttitor, suscipit interdum augue condimentum. Etiam
+                                    pretium turpis eget nibh laoreet iaculis.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Intro Item -->
+                <div class="col-lg-4 intro_col magic_fade_in">
+                    <div class="intro_item d-flex flex-column align-items-center justify-content-start text-center">
+                        <div class="intro_icon_container d-flex flex-column align-items-center justify-content-center">
+                            <div class="intro_icon"><img src="../static/images/icon_2.svg"
+                                                         alt="https://www.flaticon.com/authors/freepik"></div>
+                        </div>
+                        <div class="intro_item_content">
+                            <div class="intro_item_title">Get your Hosting</div>
+                            <div class="intro_item_text">
+                                <p>Ex eleifend orci porttitor, suscipit interdum augue condimentum. Etiam pretium turpis
+                                    eget nibh laoreet iaculis. Proin ac urna at lectus.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Intro Item -->
+                <div class="col-lg-4 intro_col magic_fade_in">
+                    <div class="intro_item d-flex flex-column align-items-center justify-content-start text-center">
+                        <div class="intro_icon_container d-flex flex-column align-items-center justify-content-center">
+                            <div class="intro_icon"><img src="../static/images/icon_3.svg"
+                                                         alt="https://www.flaticon.com/authors/freepik"></div>
+                        </div>
+                        <div class="intro_item_content">
+                            <div class="intro_item_title">Set your Website</div>
+                            <div class="intro_item_text">
+                                <p>Suscipit interdum augue condimentum. Etiam pretium turpis eget nibh laoreet iaculis.
+                                    Proin ac urna at lectus volutpat lobortis.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <div class="intro_button text-center trans_200 ml-auto mr-auto"><a href="#">Start from
+                        $9.90/month</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer magic_fade_in">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-6 footer_col magic_fade_in">
+                <div class="footer_about">
+                    <div class="footer_logo">Host<span>Space</span></div>
+                    <div class="copyright">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                        All rights reserved | This template is made with <i class="fa fa-heart-o"
+                                                                            aria-hidden="true"></i> by <a
+                            href="https://colorlib.com" target="_blank">Colorlib</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </div>
+                    <div class="footer_text">
+                        <p>Nullam lacinia ex eleifend orci porttitor, suscipit interdum augue condimentum. Etiam
+                            pretium turpis eget nibh laoreet iaculis. Nullam lacinia ex eleifend orci porttitor,
+                            suscipit interdum augue condimentum. Etiam pretium turpis eget nibh laoreet iaculis.</p>
+                    </div>
+                    <div class="contact_container">
+                        <form action="#" id="contact_form" class="contact_form">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="contact_input" placeholder="Your Name"
+                                           required="required">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="email" class="contact_input" placeholder="Your e-mail"
+                                           required="required">
+                                </div>
+                            </div>
+                            <div>
+                                    <textarea class="contact_input contact_textarea" placeholder="Message"
+                                              required="required"></textarea>
+                            </div>
+                            <button class="contact_button">Send</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 footer_col">
+                <div class="footer_links">
+                    <div class="row">
+                        <div class="col-sm-6 footer_list_col magic_fade_in">
+                            <div class="footer_list_container">
+                                <div class="footer_list_title">Hosting Options</div>
+                                <ul class="footer_list">
+                                    <li><a href="#">Web Hosting</a></li>
+                                    <li><a href="#">WordPress Hosting</a></li>
+                                    <li><a href="#">VPS Hosting</a></li>
+                                    <li><a href="#">Cloud Server</a></li>
+                                    <li><a href="#">Reseller Package</a></li>
+                                    <li><a href="#">Dedicated Hosting</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 footer_list_col magic_fade_in">
+                            <div class="footer_list_container">
+                                <div class="footer_list_title">Domains</div>
+                                <ul class="footer_list">
+                                    <li><a href="#">Buy a Domain</a></li>
+                                    <li><a href="#">Premium Domain Names</a></li>
+                                    <li><a href="#">Web Hosting</a></li>
+                                    <li><a href="#">Transfer Your Domain</a></li>
+                                    <li><a href="#">Domain Marketplace</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 footer_list_col magic_fade_in">
+                            <div class="footer_list_container">
+                                <div class="footer_list_title">Resellers</div>
+                                <ul class="footer_list">
+                                    <li><a href="#">VPS Hosting</a></li>
+                                    <li><a href="#">Cloud Server</a></li>
+                                    <li><a href="#">Reseller Package</a></li>
+                                    <li><a href="#">Dedicated Hosting</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 footer_list_col magic_fade_in">
+                            <div class="footer_list_container">
+                                <div class="footer_list_title">Support</div>
+                                <ul class="footer_list">
+                                    <li><a href="#">Buy a Domain</a></li>
+                                    <li><a href="#">Premium Domain Names</a></li>
+                                    <li><a href="#">Web Hosting</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+</div>
+
+</body>
+</html>
