@@ -55,7 +55,7 @@ function reminder() {
     var searchInput = $("#searchInput").val();
     var dynasty = getDynasty();
     $("#reminder").empty();
-    if (searchInput != null && searchInput != "") {
+    if (searchInput != null && searchInput.trim() != "") {
 
         $.ajax({
             url: "/reminder",

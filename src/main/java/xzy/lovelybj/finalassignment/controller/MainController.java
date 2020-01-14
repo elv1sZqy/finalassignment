@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import xzy.lovelybj.finalassignment.aop.CanQueryFromRedis;
 import xzy.lovelybj.finalassignment.bean.Poem;
 import xzy.lovelybj.finalassignment.service.MainService;
 
@@ -28,6 +29,7 @@ public class MainController {
         return "index";
     }
 
+    @CanQueryFromRedis
     @GetMapping("/search")
     @ResponseBody
     public List<Poem> search(String searchInput, String dynasty) {
@@ -41,6 +43,7 @@ public class MainController {
      * @param dynasty
      * @return
      */
+    @CanQueryFromRedis
     @GetMapping("/reminder")
     @ResponseBody
     public List<Poem> reminder(String searchInput, String dynasty) {

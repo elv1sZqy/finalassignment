@@ -2,13 +2,16 @@ package xzy.lovelybj.finalassignment.bean;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author zhuQiYun
  * @create 2019/12/30
  * @description :
  */
 @Data
-public class Poem {
+public class Poem implements Serializable {
+
     /**
      * 诗名
      */
