@@ -5,14 +5,12 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 import xzy.lovelybj.finalassignment.bean.Poem;
-import xzy.lovelybj.finalassignment.service.MainService;
+import xzy.lovelybj.finalassignment.service.PoemService;
 import xzy.lovelybj.finalassignment.util.ESUtil;
 import xzy.lovelybj.finalassignment.util.GainPoemUtil;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author zhuQiYun
@@ -20,7 +18,7 @@ import java.util.Set;
  * @description :
  */
 @Service
-public class MainServiceImpl implements MainService {
+public class PoemServiceImpl implements PoemService {
 
     @Autowired
     private ESUtil esUtil;
@@ -59,5 +57,10 @@ public class MainServiceImpl implements MainService {
     public void syncData(String url) {
         List<Poem> poemsFromUrl = gainPoemUtil.getPoemsFromUrl(url);
         esUtil.savePoems(poemsFromUrl);
+    }
+
+    @Override
+    public Poem getInfo(Long id) {
+        return esUtil.search(QueryBuilders.termQuery("id", id), 1).get(0);
     }
 }

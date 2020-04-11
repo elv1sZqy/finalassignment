@@ -121,6 +121,11 @@ public class RedisUtil {
         return result;
     }
 
+
+    public Double zincrby(String key,String memberName) {
+        return redisTemplate.opsForZSet().incrementScore(key,memberName,1);
+    }
+
     /**
      * 获取排行列表
      *

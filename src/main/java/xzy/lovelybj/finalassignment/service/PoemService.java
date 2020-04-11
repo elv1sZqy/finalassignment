@@ -3,14 +3,13 @@ package xzy.lovelybj.finalassignment.service;
 import xzy.lovelybj.finalassignment.bean.Poem;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author zhuQiYun
  * @create 2019/12/30
  * @description :
  */
-public interface MainService {
+public interface PoemService {
     /**
      * 根据输入的条件以及朝代查询诗
      * @param searchInput
@@ -32,4 +31,11 @@ public interface MainService {
      * @param url
      */
     void syncData(String url);
+
+    /**
+     * 根据id获取诗的详情
+     * @param id
+     * @return
+     */
+    Poem getInfo(Long id);
 }

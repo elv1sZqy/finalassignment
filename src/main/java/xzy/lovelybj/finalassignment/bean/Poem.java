@@ -13,6 +13,11 @@ import java.io.Serializable;
 public class Poem implements Serializable {
 
     /**
+     * id
+     */
+    private Long id;
+
+    /**
      * 诗名
      */
     private String poemName;
