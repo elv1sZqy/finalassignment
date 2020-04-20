@@ -36,9 +36,28 @@ function goSearch() {
                         str +
                         "                                    </ul>\n" +
                         "                                </div>\n" +
-                        "                                <div class=\"pricing_button ml-auto mr-auto\"><a href=\"#\">Buy Now</a></div>\n" +
+                        "                                <div class=\"pricing_button ml-auto mr-auto\">" +
+                        "<a href=\"#popup\">详情</a>" +
+                        "</div>\n" +
                         "                            </div>\n" +
+                        "                        </div>" +
+                        " <div class=\"popup\" id=\"popup\">\n" +
+                        "                        <div class=\"popup-inner\">\n" +
+                        "                        <div class=\"popup__photo\">\n" +
+                        "                        <!--                <img src=\"photo-1515224526905-51c7d77c7bb8.jpg\" alt=\"\">-->\n" +
+                        "                        </div>\n" +
+                        "                        <div class=\"popup__text\">\n" +
+                        "                        <h1>Lorem ipsum dolor sit amet</h1>\n" +
+                        "                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ex velit, viverra non vulputate\n" +
+                        "                    vitae, blandit vitae nisl. Nullam fermentum orci et erat viverra bibendum. Aliquam sed varius nibh,\n" +
+                        "                        vitae mattis purus. Mauris elementum sapien non ullamcorper vulputate. Orci varius natoque penatibus\n" +
+                        "                    et magnis dis parturient montes, nascetur ridiculus mus. Sed eget felis sit amet eros viverra\n" +
+                        "                    pulvinar.</p>\n" +
+                        "                    </div>\n" +
+                        "                    <a class=\"popup__close\" href=\"#popup1\">X</a>\n" +
+                        "                        </div>\n" +
                         "                        </div>")
+
                 }
 
                 // 展示搜索结果

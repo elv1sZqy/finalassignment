@@ -104,9 +104,9 @@ public class QueryAdvice {
 
         log.info("诗人或者诗句的查询条件为:" + poet + ",朝代为:" + dynasty + ",redisKey:" + redisKey);
 
-        if (redisUtil.exists(redisKey)) {
+     /*   if (redisUtil.exists(redisKey)) {
             return getPoemListFromRedis(redisKey);
-        }
+        }*/
         List<Poem> proceed = getPoemListFromES(proceedingJoinPoint, redisKey);
         return proceed;
     }

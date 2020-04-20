@@ -14,14 +14,14 @@ spring:
       elasticPassword: xxx
       elasticsearch:
         rest:
-          hostNames: 192.168.50.111:9200
+          hostNames: localhost:9200
         dateFormat: yyyy.MM.dd
         timeZone: Asia/Shanghai
         ttl: 2d
         showTemplate: true
         discoverHost: false
   redis:
-    host: 192.168.50.111
+    host: localhost
     port: 6379
 
 elasticsearch:
@@ -29,5 +29,5 @@ elasticsearch:
   password: root
   hosts:
     -
-      ip: 192.168.50.111
+      ip: localhost
       port: 9200

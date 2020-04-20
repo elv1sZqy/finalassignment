@@ -34,8 +34,9 @@ public class PoemServiceImpl implements PoemService {
         if (StringUtils.isNotBlank(searchInput)) {
             BoolQueryBuilder boolQueryBuilder2 = QueryBuilders.boolQuery();
             boolQueryBuilder2.should(QueryBuilders.matchQuery("content", searchInput));
+            // 设置诗人的权重大于诗名
+            boolQueryBuilder2.should(QueryBuilders.matchQuery("poetName", searchInput).boost(2f));
             boolQueryBuilder2.should(QueryBuilders.matchQuery("poemName", searchInput));
-            boolQueryBuilder2.should(QueryBuilders.wildcardQuery("poetName", "*" + searchInput + "*"));
             boolQueryBuilder.must(boolQueryBuilder2);
         }
         List<Poem> search = esUtil.search(boolQueryBuilder, 4);
@@ -48,7 +49,9 @@ public class PoemServiceImpl implements PoemService {
         if (StringUtils.isNotBlank(dynasty)) {
             boolQueryBuilder.must(QueryBuilders.termQuery("dynasty", dynasty));
         }
-        boolQueryBuilder.filter(QueryBuilders.wildcardQuery("poetName", "*" + searchInput + "*"));
+        // 设置诗人的权重大于诗名
+        boolQueryBuilder.should(QueryBuilders.matchQuery("poetName", searchInput).boost(2f));
+        boolQueryBuilder.should(QueryBuilders.matchQuery("poemName", searchInput));
         List<Poem> search = esUtil.search(boolQueryBuilder, 4);
         return search;
     }
