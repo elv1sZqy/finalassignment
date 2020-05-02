@@ -1,5 +1,7 @@
 package xzy.lovelybj.finalassignment;
 
+import org.frameworkset.elasticsearch.boot.BBossESStarter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -13,6 +15,6 @@ public class FinalassignmentApplication {
     /**
      * 这个注入删掉 bboss 的配置就无法生效了
      */
-  /*  @Autowired
-    private BBossESStarter bbossESStarter;*/
+    @Autowired
+    private BBossESStarter bbossESStarter;
 }

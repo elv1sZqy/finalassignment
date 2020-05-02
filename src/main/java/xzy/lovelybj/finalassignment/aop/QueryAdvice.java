@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import xzy.lovelybj.finalassignment.bean.Poem;
-import xzy.lovelybj.finalassignment.util.DateUtil;
 import xzy.lovelybj.finalassignment.util.RedisUtil;
 
 import java.util.List;
@@ -46,41 +45,6 @@ public class QueryAdvice {
         returnPoem.put("clickTimes", clickTimes);
         return returnPoem;
     }
-
-    /**
-     * 为月排行榜中的诗添加一次点击率
-     * @param id
-     */
-    private Double add2MonthLeaderBoard(Long id) {
-        String redisKey = getMonthLeaderBoard();
-        return redisUtil.zincrby(redisKey, id.toString());
-    }
-
-    /**
-     * 为周排行榜中的诗添加一次点击率
-     * @param id
-     */
-    private Double add2WeekLeaderBoard(Long id) {
-        String redisKey = getWeekLeaderBoard();
-        return redisUtil.zincrby(redisKey, id.toString());
-    }
-
-    /**
-     * 获取周榜的redisKey
-     * @return
-     */
-    private String getWeekLeaderBoard() {
-        return DateUtil.getCurrentYear() + "-" +DateUtil.getCurrentWeakInThisYear();
-    }
-
-    /**
-     * 获取月榜的redisKey
-     * @return
-     */
-    private String getMonthLeaderBoard() {
-        return DateUtil.getCurrentYear() + ":" +DateUtil.getCurrentWeakInThisYear();
-    }
-
 
     /**
      * 查询加入缓存的aop
@@ -133,5 +97,23 @@ public class QueryAdvice {
         }
         log.info("耗时:[{}]ms", useTime);
         return proceed;
+    }
+
+    /**
+     * 为月排行榜中的诗添加一次点击率
+     * @param id
+     */
+    private Double add2MonthLeaderBoard(Long id) {
+        String redisKey = redisUtil.getMonthLeaderBoardRedisKey();
+        return redisUtil.zincrby(redisKey, id.toString());
+    }
+
+    /**
+     * 为周排行榜中的诗添加一次点击率
+     * @param id
+     */
+    private Double add2WeekLeaderBoard(Long id) {
+        String redisKey = redisUtil.getWeekLeaderBoardRedisKey();
+        return redisUtil.zincrby(redisKey, id.toString());
     }
 }

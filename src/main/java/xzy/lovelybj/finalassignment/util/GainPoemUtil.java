@@ -4,6 +4,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import xzy.lovelybj.finalassignment.bean.Poem;
@@ -22,6 +24,7 @@ import java.util.Map;
  */
 @Component
 public class GainPoemUtil {
+    private Logger log = LoggerFactory.getLogger(GainPoemUtil.class);
 
     private static Map<String, String> dynastyMap;
 
@@ -41,6 +44,7 @@ public class GainPoemUtil {
                 SetPoem(link, poem);
                 poems.add(poem);
             }
+            log.info("一共同步了{}首诗", poems.size());
             return poems;
         }
         return null;

@@ -56,6 +56,7 @@ public class PoemController {
 
     @AddReadTimes
     @GetMapping("info/{id}")
+    @ResponseBody
     public Poem getInfo(@PathVariable Long id){
         return poemService.getInfo(id);
     }

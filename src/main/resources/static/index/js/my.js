@@ -15,6 +15,10 @@ function goSearch() {
         type: "GET",
         data: {"searchInput": searchInput, "dynasty": dynasty},
         success: function (data) {
+            if (data.length == 0) {
+                alert("查询结果为空!换个条件试试☺");
+                return 0;
+            }
             if (data != null) {
                 // 先将之前的内容清空
                 $("#poems").empty();
@@ -23,7 +27,14 @@ function goSearch() {
                     let content = poem.content.split(/[。！？)]/);
                     // 拼接
                     var str = "";
-                    for (item of content) {
+                    for (let i = 0; i <content.length; i++) {
+                        item = content[i];
+                        console.log(i);
+                        if (i > 4){
+                            str += "<li class=\"d-flex flex-row align-items-center justify-content-center\">\n" +
+                                "                                            <span>............</span></li>"
+                            break;
+                        }
                         str += "<li class=\"d-flex flex-row align-items-center justify-content-center\">\n" +
                             "                                            <span>" + item + "</span></li>"
                     }
@@ -36,32 +47,13 @@ function goSearch() {
                         str +
                         "                                    </ul>\n" +
                         "                                </div>\n" +
-                        "                                <div class=\"pricing_button ml-auto mr-auto\">" +
-                        "<a href=\"#popup\">详情</a>" +
-                        "</div>\n" +
+                        "                                <div class=\"pricing_button ml-auto mr-auto\"><a href=\"info\\" + poem.id+  "\">查看详情</a></div>\n" +
                         "                            </div>\n" +
-                        "                        </div>" +
-                        " <div class=\"popup\" id=\"popup\">\n" +
-                        "                        <div class=\"popup-inner\">\n" +
-                        "                        <div class=\"popup__photo\">\n" +
-                        "                        <!--                <img src=\"photo-1515224526905-51c7d77c7bb8.jpg\" alt=\"\">-->\n" +
-                        "                        </div>\n" +
-                        "                        <div class=\"popup__text\">\n" +
-                        "                        <h1>Lorem ipsum dolor sit amet</h1>\n" +
-                        "                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ex velit, viverra non vulputate\n" +
-                        "                    vitae, blandit vitae nisl. Nullam fermentum orci et erat viverra bibendum. Aliquam sed varius nibh,\n" +
-                        "                        vitae mattis purus. Mauris elementum sapien non ullamcorper vulputate. Orci varius natoque penatibus\n" +
-                        "                    et magnis dis parturient montes, nascetur ridiculus mus. Sed eget felis sit amet eros viverra\n" +
-                        "                    pulvinar.</p>\n" +
-                        "                    </div>\n" +
-                        "                    <a class=\"popup__close\" href=\"#popup1\">X</a>\n" +
-                        "                        </div>\n" +
                         "                        </div>")
-
                 }
 
                 // 展示搜索结果
-                $("#result").attr("style", "display:block;")
+                $("#result").attr("style", "display:block;");
                 // 滚动到搜索结果的部分
                 $('html,body').animate({scrollTop: 740}, 'slow');
             }
@@ -75,7 +67,6 @@ function reminder() {
     var dynasty = getDynasty();
     $("#reminder").empty();
     if (searchInput != null && searchInput.trim() != "") {
-
         $.ajax({
             url: "/reminder",
             type: "GET",
@@ -94,7 +85,6 @@ function reminder() {
                     }
                 }
             }
-
         });
     }
 

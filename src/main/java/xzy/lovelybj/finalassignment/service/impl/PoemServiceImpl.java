@@ -28,16 +28,19 @@ public class PoemServiceImpl implements PoemService {
     @Override
     public List<Poem> search(String searchInput, String dynasty) {
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
-        if (StringUtils.isNotBlank(dynasty)) {
-            boolQueryBuilder.must(QueryBuilders.termQuery("dynasty", dynasty));
-        }
         if (StringUtils.isNotBlank(searchInput)) {
             BoolQueryBuilder boolQueryBuilder2 = QueryBuilders.boolQuery();
             boolQueryBuilder2.should(QueryBuilders.matchQuery("content", searchInput));
-            // 设置诗人的权重大于诗名
-            boolQueryBuilder2.should(QueryBuilders.matchQuery("poetName", searchInput).boost(2f));
             boolQueryBuilder2.should(QueryBuilders.matchQuery("poemName", searchInput));
+            boolQueryBuilder2.should(QueryBuilders.wildcardQuery("poetName", "*" + searchInput + "*"));
             boolQueryBuilder.must(boolQueryBuilder2);
+        }
+        if (StringUtils.isNotBlank(dynasty)) {
+            if ("诗人".equals(dynasty)) {
+                boolQueryBuilder = QueryBuilders.boolQuery().filter(QueryBuilders.wildcardQuery("poetName", "*" + searchInput + "*"));
+            } else {
+                boolQueryBuilder.must(QueryBuilders.termQuery("dynasty", dynasty));
+            }
         }
         List<Poem> search = esUtil.search(boolQueryBuilder, 4);
         return search;
@@ -46,12 +49,14 @@ public class PoemServiceImpl implements PoemService {
     @Override
     public List<Poem> reminder(String searchInput, String dynasty) {
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+        boolQueryBuilder.filter(QueryBuilders.wildcardQuery("poemName", "*" + searchInput + "*"));
         if (StringUtils.isNotBlank(dynasty)) {
-            boolQueryBuilder.must(QueryBuilders.termQuery("dynasty", dynasty));
+            if ("诗人".equals(dynasty)) {
+                boolQueryBuilder = QueryBuilders.boolQuery().filter(QueryBuilders.wildcardQuery("poetName", "*" + searchInput + "*"));
+            } else {
+                boolQueryBuilder.must(QueryBuilders.termQuery("dynasty", dynasty));
+            }
         }
-        // 设置诗人的权重大于诗名
-        boolQueryBuilder.should(QueryBuilders.matchQuery("poetName", searchInput).boost(2f));
-        boolQueryBuilder.should(QueryBuilders.matchQuery("poemName", searchInput));
         List<Poem> search = esUtil.search(boolQueryBuilder, 4);
         return search;
     }

@@ -1,7 +1,13 @@
 package xzy.lovelybj.finalassignment.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import xzy.lovelybj.finalassignment.bean.Poem;
+import xzy.lovelybj.finalassignment.service.RankService;
+
+import java.util.List;
 
 /**
  * @ClassName RankController
@@ -12,9 +18,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class RankController {
 
+    @Autowired
+    private RankService rankService;
+
     @GetMapping("/week")
-    public String toWeekRankPage(){
-        System.out.println(".....");
+    public String toWeekRankPage(Model model) {
+        List<Poem> result = rankService.getWeekRank();
+        model.addAttribute("rankList", result);
         return "/rank";
     }
 }

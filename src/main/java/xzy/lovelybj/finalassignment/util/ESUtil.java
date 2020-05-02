@@ -1,11 +1,11 @@
 package xzy.lovelybj.finalassignment.util;
 
 import com.alibaba.fastjson.JSON;
-import org.apache.lucene.util.CollectionUtil;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -15,7 +15,6 @@ import org.frameworkset.elasticsearch.ElasticSearchHelper;
 import org.frameworkset.elasticsearch.client.ClientInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 import xzy.lovelybj.finalassignment.bean.Poem;
 
 import java.io.IOException;
@@ -37,12 +36,15 @@ public class ESUtil {
     @Autowired
     private RestHighLevelClient restHighLevelClient;
 
-    public List<Poem> search(QueryBuilder queryBuilder, Integer size) {
+    public List<Poem> search(QueryBuilder queryBuilder, Integer size, Integer from) {
         // poems就是在ES中的索引
         SearchRequest searchRequest = new SearchRequest(DEFAULT_INDEX_NAME);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(queryBuilder);
         searchSourceBuilder.size(size);
+        if (Objects.nonNull(from)) {
+            searchSourceBuilder.from(from);
+        }
 
         // 高亮关键字
         HighlightBuilder highlighter = new HighlightBuilder();
@@ -74,13 +76,14 @@ public class ESUtil {
                             case "poemName":
                                 poem.setPoemName(replaceContent);
                                 break;
-                            case "content"  :
+                            case "content":
                                 poem.setContent(replaceContent);
                                 break;
-                            case "poetName"  :
+                            case "poetName":
                                 poem.setPoetName(replaceContent);
                                 break;
-                            default:break;
+                            default:
+                                break;
                         }
                     }
                 }
@@ -92,9 +95,34 @@ public class ESUtil {
         return Collections.emptyList();
     }
 
-    public void savePoems(List<Poem> poemList) {
-        restClientUtil.addDocuments(DEFAULT_INDEX_NAME,"doc",poemList);
+    public List<Poem> search(QueryBuilder queryBuilder, Integer size) {
+       return search(queryBuilder, size, null);
     }
 
+    public void savePoems(List<Poem> poemList) {
+        restClientUtil.addDocuments(DEFAULT_INDEX_NAME, "doc", poemList);
+    }
+
+    /**
+     * 查询一共有多少诗
+     *
+     * @param boolQueryBuilder
+     * @return
+     */
+    public Integer getPoemsCount(BoolQueryBuilder boolQueryBuilder) {
+        // poems就是在ES中的索引
+        SearchRequest searchRequest = new SearchRequest(DEFAULT_INDEX_NAME);
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(boolQueryBuilder);
+        searchRequest.source(searchSourceBuilder);
+        SearchResponse search = null;
+        try {
+            search = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Long totalHits = search.getHits().getTotalHits();
+        return Integer.parseInt(totalHits.toString());
+    }
 
 }

@@ -1,33 +1,3 @@
-server:
-  port: 8080
-
 spring:
-  mvc:
-    view:
-      prefix: /templates/
-      suffix: .html
-    static-path-pattern: /static/**
-
-  elasticsearch:
-    bboss:
-      elasticUser: xxx
-      elasticPassword: xxx
-      elasticsearch:
-        rest:
-          hostNames: localhost:9200
-        dateFormat: yyyy.MM.dd
-        timeZone: Asia/Shanghai
-        ttl: 2d
-        showTemplate: true
-        discoverHost: false
-  redis:
-    host: localhost
-    port: 6379
-
-elasticsearch:
-  userName: root
-  password: root
-  hosts:
-    -
-      ip: localhost
-      port: 9200
+  profiles:
+    active: my

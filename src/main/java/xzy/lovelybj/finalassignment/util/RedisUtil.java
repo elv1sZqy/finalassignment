@@ -168,4 +168,21 @@ public class RedisUtil {
         map.put("score", score);
         return map;
     }
+
+    /**
+     * 获取周榜的redisKey
+     * @return
+     */
+    public String getWeekLeaderBoardRedisKey() {
+        return DateUtil.getCurrentYear() + "-" +DateUtil.getCurrentWeakInThisYear();
+    }
+
+    /**
+     * 获取月榜的redisKey
+     * @return
+     */
+    public String getMonthLeaderBoardRedisKey() {
+        return DateUtil.getCurrentYear() + ":" +DateUtil.getCurrentWeakInThisYear();
+    }
+
 }
