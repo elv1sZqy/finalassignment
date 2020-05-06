@@ -46,4 +46,9 @@ public class Poem implements Serializable {
      */
     private String tag;
 
+    private String poetInfo;
+
+    private String poetPic;
+
+
 }

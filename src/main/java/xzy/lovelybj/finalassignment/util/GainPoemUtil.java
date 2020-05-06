@@ -11,10 +11,7 @@ import org.springframework.util.CollectionUtils;
 import xzy.lovelybj.finalassignment.bean.Poem;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -24,7 +21,7 @@ import java.util.Map;
  */
 @Component
 public class GainPoemUtil {
-    private Logger log = LoggerFactory.getLogger(GainPoemUtil.class);
+    private static Logger log = LoggerFactory.getLogger(GainPoemUtil.class);
 
     private static Map<String, String> dynastyMap;
 
@@ -42,7 +39,9 @@ public class GainPoemUtil {
             for (String link : links) {
                 Poem poem = new Poem();
                 SetPoem(link, poem);
-                poems.add(poem);
+                if (Objects.nonNull(poem)) {
+                    poems.add(poem);
+                }
             }
             log.info("一共同步了{}首诗", poems.size());
             return poems;
@@ -82,23 +81,38 @@ public class GainPoemUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Elements sons = document.getElementsByClass("sons");
-        Element poemContent = sons.get(0).getAllElements().get(1);
-        Elements poemRemake = sons.get(1).getElementsByClass("contyishang").get(0).getElementsByTag("p");
+        Elements sons = null;
+        Element poemContent = null;
+        Elements poemRemake = null;
+        try {
+            sons = document.getElementsByClass("sons");
+            poemContent = sons.get(0).getAllElements().get(1);
+            poemRemake = sons.get(1).getElementsByClass("contyishang").get(0).getElementsByTag("p");
+        } catch (Exception e) {
+            log.error("读取网页信息异常,{}", e);
+            return;
+        }
 
         String poemName = poemContent.getElementsByTag("h1").text();
         String content = poemContent.getElementsByClass("contson").get(0).text();
         String poetNameAndDynasty = poemContent.getElementsByClass("source").text();
+        String poetInfo = null;
+        String poetPic = null;
+        if (!poetNameAndDynasty.contains("佚名")) {
+            Element sonspic = document.getElementsByClass("sonspic").first();
+            poetInfo = sonspic.getElementsByTag("p").get(1).text();
+            poetPic = sonspic.getElementsByTag("img").first().attr("src");
+        }
         String tag = sons.get(0).getElementsByClass("tag").get(0).text();
         for (Element element : poemRemake) {
             String text = element.text();
             String substring = text.length() > 3 ? text.substring(0, 2) : "";
             switch (substring) {
-                case "译文":
+                case "注释":
                     String remark = text.substring(3);
                     poem.setRemake(remark);
                     break;
-                case "注释":
+                case "译文":
                     String translation = text.substring(3);
                     poem.setTranslation(translation);
                     break;
@@ -109,12 +123,16 @@ public class GainPoemUtil {
         String[] poetNameAndDynastyArgs = poetNameAndDynasty.split("：");
 
         if (poetNameAndDynastyArgs != null) {
-            poem.setDynasty(dynastyMap.get(poetNameAndDynastyArgs[0]));
+            String dynasty = dynastyMap.get(poetNameAndDynastyArgs[0]);
+            dynasty = dynasty == null ? poetNameAndDynastyArgs[0] : dynasty;
+            poem.setDynasty(dynasty);
             poem.setPoetName(poetNameAndDynastyArgs[1]);
         }
         poem.setId(System.currentTimeMillis());
         poem.setContent(content);
         poem.setPoemName(poemName);
+        poem.setPoetPic(poetPic);
+        poem.setPoetInfo(poetInfo);
         poem.setTag(tag);
 
     }

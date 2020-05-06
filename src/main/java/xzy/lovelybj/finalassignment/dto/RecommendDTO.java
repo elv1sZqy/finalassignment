@@ -11,6 +11,7 @@ import xzy.lovelybj.finalassignment.bean.Poem;
  */
 @Data
 public class RecommendDTO {
+    private String id;
     private String tag;
     private Poem poem;
     private String picLink;

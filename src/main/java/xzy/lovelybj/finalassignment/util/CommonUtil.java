@@ -25,4 +25,9 @@ public class CommonUtil {
         }
         return list;
     }
+
+    public static String getRandomPicUrl() {
+        int id = random.nextInt(1000);
+        return String.format(PIC_LINK_FORMATER, id);
+    }
 }

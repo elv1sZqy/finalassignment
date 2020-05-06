@@ -37,6 +37,9 @@ public class RecommendServiceImpl implements RecommendService {
         for (int i = 0; i < poems.size(); i++) {
             RecommendDTO recommendDTO = new RecommendDTO();
             Poem poem = poems.get(i);
+            if (Objects.isNull(poem) || null == poem.getId()) {
+                continue;
+            }
             String[] tagArr = poem.getTag().split("，");
             String tag = null;
             if (tagArr.length > 2) {

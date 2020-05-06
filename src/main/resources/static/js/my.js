@@ -75,7 +75,7 @@ function reminder() {
                 if (data != null) {
                     for (poem of data) {
                         $("#reminder").append("<details>\n" +
-                            "    <summary>" + poem.poemName + "         /"+poem.dynasty+"-"+poem.poetName+"</summary>\n" +
+                            "    <summary>" + poem.poemName + "         /" + poem.dynasty + "-" + poem.poetName + "</summary>\n" +
                             "    <div class=\"details-wrapper\">\n" +
                             "        <div class=\"details-styling\">\n" +
                             poem.content +
@@ -87,8 +87,65 @@ function reminder() {
             }
         });
     }
-
 }
+
+
+function addHistory(poem) {
+    var history = document.getElementById("createHistory1");
+    if (history.childElementCount < 3) {
+        return addPoem(poem, history);
+    }
+    var history2 = document.getElementById("createHistory2");
+    if (history2.childElementCount < 3) {
+        return addPoem(poem, history2);
+    }
+    // 两个都重置
+    reset(history, history2);
+    return addPoem(poem, history);
+}
+
+function createPoem() {
+    $.ajax({
+        //几个参数需要注意一下
+        type: "GET",//方法类型
+        dataType: "json",//预期服务器返回的数据类型
+        url: "/newPoem",//url
+        data: $('#form1').serialize(),
+        complete: function (result) {
+            if (result.status == 200) {
+                let poem = result.responseText;
+                let isLike = confirm(poem+"\n点击 \"取消\" 再生成一首");
+                if (!isLike) {
+                    createPoem();
+                    return;
+                }
+                addHistory(poem);
+            }
+            ;
+        }
+
+    });
+}
+function addPoem(poem, history) {
+    let split = poem.split(/[。！？)]/);
+    var div = document.createElement("div");
+    div.setAttribute("class", "footer_list_container");
+
+    div.innerHTML = "  <ul class=\"footer_list\">\n" +
+        "                                    <li>" + split[0] + "</li>\n" +
+        "                                    <li>" + split[1] + "</li>\n" +
+        "                                    <li>" + split[2] + "</li>\n" +
+        "                                    <li>" + split[3] + "</li>\n" +
+        "                                </ul>";
+    history.appendChild(div);
+    return;
+}
+
+function reset(history, history2) {
+    history.innerHTML = "<div class=\"footer_list_title\">生成历史</div>";
+    history2.innerHTML = "<div class=\"footer_list_title\">&nbsp;&nbsp;&nbsp;</div>";
+}
+
 
 
 

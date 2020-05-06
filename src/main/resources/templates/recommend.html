@@ -48,6 +48,7 @@
 
                 <div th:each="item : ${recommend}" th:data-sjsel="${item.tag}">
                     <div class="card">
+                        <a th:href="'/info/'+${item.poem.id}">
                         <img class="card__picture" th:src="${item.picLink}" alt="">
                         <div class="card-infos">
                             <h2 class="card__title">[[${item.poem.poemName}]]</h2>
@@ -56,6 +57,7 @@
                                 [[${item.poem.content}]]
                             </p>
                         </div>
+                        </a>
                     </div>
                 </div>
 

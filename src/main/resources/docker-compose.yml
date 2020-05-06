@@ -1,20 +1,15 @@
 version: '3'
-  services:
-    app:
-      image: app
-      ports:
-        - 8080:8080
-      links:
-        - es
-        - redis
-
-    es:
-      image: elasticsearch:6.8.4
-      expose:
-        - "9200"
-        - "9300"
-
-    redis:
-      image: redis:5.0.3
-      expose:
-        - "6379"
+    services:
+        kibana:
+            image: kibana:6.8.4
+            ports:
+            - "5601:5601"
+        es:
+            image: elasticsearch:6.8.4
+            expose:
+            - "9200"
+            - "9300"
+        redis:
+            image: redis:5.0.3
+            expose:
+            - "6379"

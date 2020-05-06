@@ -4,26 +4,25 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>jQuery书本翻页特效|DEMO_jQuery之家-自由分享jQuery、html5、css3的插件库</title>
+	<title>[[${poem.poemName}]]</title>
 	<link rel="stylesheet" type="text/css" href="../static/details/css/normalize.css" /><!--CSS RESET-->
 	<link rel="stylesheet" type="text/css" href="../static/details/css/htmleaf-demo.css"><!--演示页面样式，使用时可以不引用-->
 	<link rel="stylesheet" href="../static/details/css/style.css">
-<!--	<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>-->
 </head>
 <body>
-	
-	<div class="scene">
+	<div class="scene"  bgcolor="#E1E0C7">
 	  <article class="book">
 		<section class="page active">
 		<div class="front">
 			<header class="htmleaf-header">
-			<h1> [[${poem.poemName}]]<span>[[${poem.poetName}]]</span></h1>
+			<h1> [[${poem.poemName}]]<span>[[${poem.poetName}]]-[[${poem.dynasty}]]</span></h1>
 			<div class="htmleaf-links">
 				<a class="htmleaf-icon icon-htmleaf-home-outline" href="http://www.htmleaf.com/" title="jQuery之家" target="_blank"><span> jQuery之家</span></a>
 				<a class="htmleaf-icon icon-htmleaf-arrow-forward-outline" href="http://www.htmleaf.com/jQuery/Layout-Interface/201911155840.html" title="返回下载页" target="_blank"><span> 返回下载页</span></a>
 			</div>
 		</header>
-		  <h1>恭喜你发现了一首好诗, 快来看看它吧</h1>
+		  <h4><span>本月点击量:[[${poem.clickRate}]]</span></h4>
+		  <h4><span>本月排名:[[${poem.rank}]]</span></h4>
 		</div>
 		<div class="back">
 		  <h1>– 1.原文 –</h1>
@@ -32,67 +31,35 @@
 		</section>
 		<section class="page">
 		<div class="front">
-		  <h1>– 2.解析 –</h1>
+		  <h1>– 2.译文 –</h1>
 			[[${poem.translation}]]
 		</div>
 		<div class="back">
-		  <h1>– 3.作者 –</h1>
-		  <p>
-		    Er hörte leise Schritte hinter sich. Das bedeutete nichts Gutes. Wer würde ihm schon folgen, spät in der Nacht und dazu noch in dieser engen Gasse mitten im übel beleumundeten Hafenviertel? Gerade jetzt, wo er das Ding seines Lebens gedreht hatte und mit der Beute verschwinden wollte!
-		  </p>
-		  <p>
-		    Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen? Er konnte die Aufforderung stehen zu bleiben schon hören. Gehetzt sah er sich um.
-		  </p>
+		  <h1>– 3.注释 –</h1>
+			[[${poem.remake}]]
 		</div>    
 		</section>
 		<section class="page">
 		<div class="front">
-		  <h1>– 4.作者的其他诗 –</h1>
+		  <h1>– 4.作者 –</h1>
+			<img th:src="${poem.poetPic}"><br>
 		  <p>
-		    Sehen Sie, Webstandards sind das Regelwerk, auf dem Webseiten aufbauen. So gibt es Regeln für HTML, CSS, JavaScript oder auch XML; Worte, die Sie vielleicht schon einmal von Ihrem Entwickler gehört haben. Diese Standards sorgen dafür, dass alle Beteiligten aus einer Webseite den größten Nutzen ziehen.
-		  </p>
-		  <p>
-		    Im Gegensatz zu früheren Webseiten müssen wir zum Beispiel nicht mehr zwei verschiedene Webseiten für den Internet Explorer und einen anderen Browser programmieren. Es reicht eine Seite, die - richtig angelegt - sowohl auf verschiedenen Browsern im Netz funktioniert, aber ebenso gut für den Ausdruck oder
+			  [[${poem.poetInfo}]]
 		  </p>
 		</div>
+
+
+
 		<div class="back">
-		  <h1>– 5 –</h1>
-		  <p>
-		    Er hörte leise Schritte hinter sich. Das bedeutete nichts Gutes. Wer würde ihm schon folgen, spät in der Nacht und dazu noch in dieser engen Gasse mitten im übel beleumundeten Hafenviertel? Gerade jetzt, wo er das Ding seines Lebens gedreht hatte und mit der Beute verschwinden wollte!
-		  </p>
-		  <p>
-		    Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen? Er konnte die Aufforderung stehen zu bleiben schon hören. Gehetzt sah er sich um.
-		  </p>
+		  <h1>– <a th:href="@{/info/{id}(id=*{other[0].id})}">[[*{other[0].poemName}]]</a> –</h1>
+			[[*{other[0].content}]]
 		</div>    
 		</section>
 		<section class="page">
 		<div class="front">
-		  <h1>– 6 –</h1>
-		  <p>
-		    Sehen Sie, Webstandards sind das Regelwerk, auf dem Webseiten aufbauen. So gibt es Regeln für HTML, CSS, JavaScript oder auch XML; Worte, die Sie vielleicht schon einmal von Ihrem Entwickler gehört haben. Diese Standards sorgen dafür, dass alle Beteiligten aus einer Webseite den größten Nutzen ziehen.
-		  </p>
-		  <p>
-		    Im Gegensatz zu früheren Webseiten müssen wir zum Beispiel nicht mehr zwei verschiedene Webseiten für den Internet Explorer und einen anderen Browser programmieren. Es reicht eine Seite, die - richtig angelegt - sowohl auf verschiedenen Browsern im Netz funktioniert, aber ebenso gut für den Ausdruck oder
-		  </p>
-		</div>
-		<div class="back">
-		  <h1>– 7 –</h1>
-		  <p>
-		    Er hörte leise Schritte hinter sich. Das bedeutete nichts Gutes. Wer würde ihm schon folgen, spät in der Nacht und dazu noch in dieser engen Gasse mitten im übel beleumundeten Hafenviertel? Gerade jetzt, wo er das Ding seines Lebens gedreht hatte und mit der Beute verschwinden wollte!
-		  </p>
-		  <p>
-		    Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen? Er konnte die Aufforderung stehen zu bleiben schon hören. Gehetzt sah er sich um.
-		  </p>
-		</div>    
-		</section>
-		<section class="page">
-		<div class="front">
-		  <p>
-		    Sehen Sie, Webstandards sind das Regelwerk, auf dem Webseiten aufbauen. So gibt es Regeln für HTML, CSS, JavaScript oder auch XML; Worte, die Sie vielleicht schon einmal von Ihrem Entwickler gehört haben. Diese Standards sorgen dafür, dass alle Beteiligten aus einer Webseite den größten Nutzen ziehen.
-		  </p>
-		  <p>
-		    Im Gegensatz zu früheren Webseiten müssen wir zum Beispiel nicht mehr zwei verschiedene Webseiten für den Internet Explorer und einen anderen Browser programmieren. Es reicht eine Seite, die - richtig angelegt - sowohl auf verschiedenen Browsern im Netz funktioniert, aber ebenso gut für den Ausdruck oder
-		  </p>
+		  <h1>- <a th:href="@{/info/{id}(id=*{other[1].id})}">[[*{other[1].poemName}]]</a> -</h1>
+			<h2></h2>
+			[[*{other[1].content}]]
 		</div>
 		<div class="back">
 		  <h1>– 最后 –</h1>

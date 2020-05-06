@@ -1,6 +1,8 @@
 package xzy.lovelybj.finalassignment.service;
 
+import org.elasticsearch.index.query.TermQueryBuilder;
 import xzy.lovelybj.finalassignment.bean.Poem;
+import xzy.lovelybj.finalassignment.dto.PoemDTO;
 
 import java.util.List;
 
@@ -30,12 +32,16 @@ public interface PoemService {
      * 同步数据
      * @param url
      */
-    void syncData(String url);
+    int syncData(String url);
 
     /**
      * 根据id获取诗的详情
      * @param id
      * @return
      */
-    Poem getInfo(Long id);
+    PoemDTO getInfo(Long id);
+
+    List<Poem> searchByPoetName(String poetName, String dynasty, TermQueryBuilder unIncludeQueryBuilder, int size);
+
+    String getNewPoem(String[] agrs);
 }

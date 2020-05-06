@@ -162,11 +162,22 @@ public class RedisUtil {
     public Map<String, Object> getSingleRankAndScore(String rangName, String key) {
         ZSetOperations zSetOperations = redisTemplate.opsForZSet();
         Map<String, Object> map = new HashMap<>();
-        Long rank = zSetOperations.rank(rangName, key);
+        Long rank = zSetOperations.reverseRank(rangName, key);
         Double score = zSetOperations.score(rangName, key);
         map.put("rank", rank);
         map.put("score", score);
         return map;
+    }
+
+
+    public Long getSingleRank(String rangName, String key) {
+        ZSetOperations zSetOperations = redisTemplate.opsForZSet();
+        return zSetOperations.rank(rangName, key);
+    }
+
+    public Double getSingleScore(String rangName, String key) {
+        ZSetOperations zSetOperations = redisTemplate.opsForZSet();
+        return zSetOperations.score(rangName, key);
     }
 
     /**
@@ -174,7 +185,7 @@ public class RedisUtil {
      * @return
      */
     public String getWeekLeaderBoardRedisKey() {
-        return DateUtil.getCurrentYear() + "-" +DateUtil.getCurrentWeakInThisYear();
+        return DateUtil.getCurrentYear() + "-week-" +DateUtil.getCurrentWeakInThisYear();
     }
 
     /**
@@ -182,7 +193,7 @@ public class RedisUtil {
      * @return
      */
     public String getMonthLeaderBoardRedisKey() {
-        return DateUtil.getCurrentYear() + ":" +DateUtil.getCurrentWeakInThisYear();
+        return DateUtil.getCurrentYear() + ":month:" +DateUtil.getCurrentWeakInThisYear();
     }
 
 }

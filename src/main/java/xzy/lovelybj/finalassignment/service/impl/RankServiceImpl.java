@@ -33,33 +33,41 @@ public class RankServiceImpl implements RankService {
 
     private static String CLASS_FRMATER = "slide slide--%d js-slide";
     @Override
-    public List<Poem> getWeekRank() {
+    public List<RankDTO> getWeekRank() {
         String weekLeaderBoardRedisKey = redisUtil.getWeekLeaderBoardRedisKey();
+        List<RankDTO> result = getRankInfo(weekLeaderBoardRedisKey);
+        return result;
+    }
+    @Override
+    public List<RankDTO> getMonthRand() {
+        String monthLeaderBoardRedisKey = redisUtil.getMonthLeaderBoardRedisKey();
+        List<RankDTO> result = getRankInfo(monthLeaderBoardRedisKey);
+        return result;
+    }
+
+    private List<RankDTO> getRankInfo(String weekLeaderBoardRedisKey) {
         Set<String> rang = redisUtil.getRang(weekLeaderBoardRedisKey, 0, 10);
         TermsQueryBuilder queryBuilder = QueryBuilders.termsQuery("id", rang);
         List<Poem> poems = esUtil.search(queryBuilder, rang.size());
-        int size = poems.size();
         List<RankDTO> result = new ArrayList<>();
-        getClassName(poems,result,size);
-        List<String> randomPicUrl = CommonUtil.getRandomPicUrl(size);
-        for (int i = 0; i < result.size(); i++) {
-            result.get(i).setPicLinkUrl(randomPicUrl.get(i));
-        }
-        return poems;
+        rang.forEach(id -> {
+            poems.forEach(poem -> {
+                if (id.equals(poem.getId().toString())) {
+                    RankDTO rankDTO = new RankDTO();
+                    rankDTO.setPoem(poem);
+                    setClassType(rankDTO);
+                    rankDTO.setPicLinkUrl(CommonUtil.getRandomPicUrl());
+                    result.add(rankDTO);
+                }
+            });
+        });
+        return result;
     }
 
-
-    private void getClassName(List<Poem> poems, List<RankDTO> result, int size) {
-        for (int i = 0; i < size; i++) {
-            RankDTO rankDTO = new RankDTO();
-            rankDTO.setPoem(poems.get(i));
-            int id = random.nextInt(2);
-            id += 1;
-            String classType = String.format(CLASS_FRMATER, id);
-            rankDTO.setClassType(classType);
-            result.add(rankDTO);
-        }
+    private void setClassType(RankDTO rankDTO) {
+        int id = random.nextInt(2);
+        id += 1;
+        String classType = String.format(CLASS_FRMATER, id);
+        rankDTO.setClassType(classType);
     }
-
-
 }

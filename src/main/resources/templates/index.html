@@ -18,7 +18,7 @@
     <script src="../static/index/js/jquery-3.3.1.min.js"></script>
 
     <!--我的JS基本都在这个里面-->
-    <script src="../static/index/js/my.js"></script>
+    <script src="../static/js/my.js"></script>
 
     <script src="../static/index/js/index/custom.js"></script>
     <script src="../static/index/js/index/index.js"></script>
@@ -168,7 +168,7 @@
                                     eget nibh laoreet iaculis. Proin ac urna at lectus.</p>
                             </div>
                             <div class="col text-center">
-                                <div class="intro_button text-center trans_200 ml-auto mr-auto"><a href="/week">查看</a></div>
+                                <div class="intro_button text-center trans_200 ml-auto mr-auto"><a href="/month">查看</a></div>
                             </div>
                         </div>
                     </div>
@@ -194,12 +194,6 @@
                 </div>
 
             </div>
-        <!--    <div class="row">
-                <div class="col text-center">
-                    <div class="intro_button text-center trans_200 ml-auto mr-auto"><a href="#">Start from
-                        $9.90/month</a></div>
-                </div>
-            </div>-->
         </div>
     </div>
 </div>
@@ -207,40 +201,38 @@
 <footer class="footer magic_fade_in">
     <div class="container">
         <div class="row">
-
             <div class="col-lg-6 footer_col magic_fade_in">
                 <div class="footer_about">
-                    <div class="footer_logo">Host<span>Space</span></div>
-                    <div class="copyright">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;<script>document.write(new Date().getFullYear());</script>
-                        All rights reserved | This template is made with <i class="fa fa-heart-o"
-                                                                            aria-hidden="true"></i> by <a
-                            href="https://colorlib.com" target="_blank">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </div>
+                    <div class="footer_logo">生成<span>"惊雷"</span></div>
                     <div class="footer_text">
-                        <p>Nullam lacinia ex eleifend orci porttitor, suscipit interdum augue condimentum. Etiam
-                            pretium turpis eget nibh laoreet iaculis. Nullam lacinia ex eleifend orci porttitor,
-                            suscipit interdum augue condimentum. Etiam pretium turpis eget nibh laoreet iaculis.</p>
+                        <p>原版:<br>惊雷 通天修为天塌地陷紫金锤<br>
+                            紫电 玄真火焰九天玄剑惊天变<br>
+                            乌云 那驰骋沙场 呼啸烟雨顿<br>
+                            多情自古空余恨 手持弯月刃</p>
                     </div>
                     <div class="contact_container">
-                        <form action="#" id="contact_form" class="contact_form">
+                        <form action="#" id="form1" class="contact_form">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <input type="text" class="contact_input" placeholder="Your Name"
-                                           required="required">
+                                    <input type="text" class="contact_input" name="args" placeholder="请输入第一个关键词（默认：惊雷）"
+                                    >
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="email" class="contact_input" placeholder="Your e-mail"
-                                           required="required">
+                                    <input type="text" class="contact_input" name="args" placeholder=" 请输入第二个关键词（默认：紫电）"
+                                    >
                                 </div>
                             </div>
-                            <div>
-                                    <textarea class="contact_input contact_textarea" placeholder="Message"
-                                              required="required"></textarea>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="contact_input" name="args" placeholder="请输入第三个关键词（默认：乌云）"
+                                    >
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="contact_input" name="args" placeholder="请输入一句诗句（默认：多情自古空余恨）"
+                                    >
+                                </div>
                             </div>
-                            <button class="contact_button">Send</button>
+                            <button class="contact_button" onclick="createPoem();return false">生成</button>
                         </form>
                     </div>
                 </div>
@@ -249,61 +241,23 @@
             <div class="col-lg-6 footer_col">
                 <div class="footer_links">
                     <div class="row">
-                        <div class="col-sm-6 footer_list_col magic_fade_in">
-                            <div class="footer_list_container">
-                                <div class="footer_list_title">Hosting Options</div>
-                                <ul class="footer_list">
-                                    <li><a href="#">Web Hosting</a></li>
-                                    <li><a href="#">WordPress Hosting</a></li>
-                                    <li><a href="#">VPS Hosting</a></li>
-                                    <li><a href="#">Cloud Server</a></li>
-                                    <li><a href="#">Reseller Package</a></li>
-                                    <li><a href="#">Dedicated Hosting</a></li>
-                                </ul>
-                            </div>
+                        <div class="col-sm-6 footer_list_col magic_fade_in" id="createHistory1">
+                            <div class="footer_list_title">生成历史</div>
+
                         </div>
-                        <div class="col-sm-6 footer_list_col magic_fade_in">
-                            <div class="footer_list_container">
-                                <div class="footer_list_title">Domains</div>
-                                <ul class="footer_list">
-                                    <li><a href="#">Buy a Domain</a></li>
-                                    <li><a href="#">Premium Domain Names</a></li>
-                                    <li><a href="#">Web Hosting</a></li>
-                                    <li><a href="#">Transfer Your Domain</a></li>
-                                    <li><a href="#">Domain Marketplace</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 footer_list_col magic_fade_in">
-                            <div class="footer_list_container">
-                                <div class="footer_list_title">Resellers</div>
-                                <ul class="footer_list">
-                                    <li><a href="#">VPS Hosting</a></li>
-                                    <li><a href="#">Cloud Server</a></li>
-                                    <li><a href="#">Reseller Package</a></li>
-                                    <li><a href="#">Dedicated Hosting</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 footer_list_col magic_fade_in">
-                            <div class="footer_list_container">
-                                <div class="footer_list_title">Support</div>
-                                <ul class="footer_list">
-                                    <li><a href="#">Buy a Domain</a></li>
-                                    <li><a href="#">Premium Domain Names</a></li>
-                                    <li><a href="#">Web Hosting</a></li>
-                                </ul>
-                            </div>
+
+                        <div class="col-sm-6 footer_list_col magic_fade_in" id="createHistory2">
+                            <div class="footer_list_title">&nbsp;&nbsp;&nbsp;</div>
+
                         </div>
                     </div>
                 </div>
             </div>
 
+
         </div>
     </div>
 </footer>
-
 </div>
-
 </body>
 </html>

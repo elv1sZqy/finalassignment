@@ -1,14 +1,12 @@
 package xzy.lovelybj.finalassignment.aop;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,16 +32,19 @@ public class QueryAdvice {
     @Autowired
     private RedisUtil redisUtil;
 
-    @AfterReturning(returning = "retVal", pointcut = "@annotation(AddReadTimes)")
-    public Object addTimes(JoinPoint joinPoint, Object retVal) {
+    @Before("@annotation(AddReadTimes)")
+    public Object addTimes(JoinPoint joinPoint) {
         String requestName = joinPoint.getSignature().getName();
         log.info("请求的接口为:" + requestName);
-        JSONObject returnPoem = JSONObject.parseObject(JSON.toJSONString(retVal));
-        Long id = returnPoem.getLong("id");
-        add2WeekLeaderBoard(id);
-        Double clickTimes = add2MonthLeaderBoard(id);
-        returnPoem.put("clickTimes", clickTimes);
-        return returnPoem;
+        Object[] args = joinPoint.getArgs();
+        for (Object arg : args) {
+            if (arg instanceof Long) {
+                Long id = (Long) arg;
+                add2WeekLeaderBoard(id);
+                add2MonthLeaderBoard(id);
+            }
+        }
+        return joinPoint;
     }
 
     /**

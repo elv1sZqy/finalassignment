@@ -8,6 +8,8 @@
     <link rel="stylesheet" type="text/css" href="../static/rank/css/normalize.css"/>
     <link rel="stylesheet" type="text/css" href="../static/rank/css/htmleaf-demo.css">
     <link rel="stylesheet" href="../static/rank/css/style.css">
+
+    <script src="../static/js/my.js"></script>
 </head>
 <body>
 
@@ -24,9 +26,8 @@
     </div>
 </a>
 
-<!--todo 修改-->
 <a href="#" class="hi">
-    双击古诗查看详情☺
+    点击诗名查看详情☺
 </a>
 
 <a href="/index" rel="nofollow"
@@ -43,13 +44,13 @@
     <nav class="filter">
         <ul class="filter__list">
             <li class="filter__item">
-                <a href="#" class="filter__link is-active js-trigger">
+                <a href="/week" th:class="${weekClass}" >
                     <div class="filter__link-mask" area-hidden><span>周榜</span></div>
                     查看周榜
                 </a>
             </li>
             <li class="filter__item">
-                <a href="#" class="filter__link js-trigger">
+                <a href="/month" th:class="${monthClass}" >
                     <div class="filter__link-mask" area-hidden><span>月榜</span></div>
                     查看月榜
                 </a>
@@ -75,11 +76,14 @@
         <div th:each="info,status:${rankList}">
             <article th:class="${info.classType}">
                 <div class="slide__inner">
-                    <div class="slide__sub-title"><span>[[${info.poem.dynasty}]]</span></div><br>
+                    <div class="slide__sub-title"><span>[[${info.poem.dynasty}]]</span></div>
+                    <br>
                     <h1 class="slide__title">
-                        <div class="js-transition-title">[[${status.index}+1]] - [[${info.poem.poemName}]]</div>
+                        <a style="text-decoration:none;" th:href="@{/info/{id}(id=${info.poem.id})}">
+                            <div class="js-transition-title">[[${status.index}+1]] - [[${info.poem.poemName}]]</div>
+                        </a>
                     </h1>
-                    <div class="slide__img slide__img--proxy" ondblclick="window.open('http://www.baidu.com','_self')">
+                    <div class="slide__img slide__img--proxy">
                         [[${info.poem.content}]]
                     </div>
                     <div class="slide__project">[[${info.poem.poetName}]]</div>
@@ -96,6 +100,7 @@
 </div>
 
 <div class="mask js-mask">
+    <div class="mask__slice js-mask__slice"></div>
     <div class="mask__slice js-mask__slice"></div>
     <div class="mask__slice js-mask__slice"></div>
     <div class="mask__slice js-mask__slice"></div>

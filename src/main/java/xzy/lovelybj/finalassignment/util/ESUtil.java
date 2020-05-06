@@ -66,7 +66,6 @@ public class ESUtil {
             SearchHit[] hits = search.getHits().getHits();
             List<Poem> collect = Arrays.stream(hits).map(documentFields -> {
                 Poem poem = JSON.parseObject(documentFields.getSourceAsString(), Poem.class);
-                Map<String, Object> sourceAsMap = documentFields.getSourceAsMap();
                 Map<String, HighlightField> highlightFields = documentFields.getHighlightFields();
                 if (highlightFields != null) {
                     for (Map.Entry<String, HighlightField> highlightFieldEntry : highlightFields.entrySet()) {

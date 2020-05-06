@@ -1,6 +1,6 @@
 package xzy.lovelybj.finalassignment.service;
 
-import xzy.lovelybj.finalassignment.bean.Poem;
+import xzy.lovelybj.finalassignment.dto.RankDTO;
 
 import java.util.List;
 
@@ -11,5 +11,7 @@ import java.util.List;
  */
 public interface RankService {
 
-    List<Poem> getWeekRank();
+    List<RankDTO> getWeekRank();
+
+    List<RankDTO> getMonthRand();
 }
