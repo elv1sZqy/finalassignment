@@ -62,8 +62,11 @@ public class PoemServiceImpl implements PoemService {
     @Override
     public List<Poem> reminder(String searchInput, String dynasty) {
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
-        boolQueryBuilder.should(QueryBuilders.wildcardQuery("poemName", "*" + searchInput + "*"));
-        boolQueryBuilder.should(QueryBuilders.termQuery("poemName.keyword", searchInput));
+        BoolQueryBuilder condition = QueryBuilders.boolQuery();
+        condition.should(QueryBuilders.wildcardQuery("poemName", "*" + searchInput + "*"));
+        condition.should(QueryBuilders.matchQuery("poemName", searchInput));
+        condition.should(QueryBuilders.matchQuery("content", searchInput));
+        boolQueryBuilder.must(condition);
         if (StringUtils.isNotBlank(dynasty)) {
             if ("诗人".equals(dynasty)) {
                 boolQueryBuilder = QueryBuilders.boolQuery().filter(QueryBuilders.wildcardQuery("poetName", "*" + searchInput + "*"));

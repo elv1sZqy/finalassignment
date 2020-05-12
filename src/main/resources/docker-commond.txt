@@ -1,0 +1,3 @@
+docker cp analysis-ik es:/usr/share/elasticsearch/plugins/    安装插件
+docker run  -d -p 9200:9200 -p 9300:9300 -p 5601:5601 --name es elasticsearch:6.8.6         启动es
+docker run  -d -e ELASTICSEARCH_URL=http://127.0.0.1:9200 --name kibana --network=container:es kibana:6.8.6  启动kibana
