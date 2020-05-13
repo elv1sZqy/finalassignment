@@ -119,7 +119,6 @@ public class PoemServiceImpl implements PoemService {
                 }
             }
         }
-
         String read = null;
         try {
             Process process = Runtime.getRuntime().exec(args);
@@ -130,8 +129,6 @@ public class PoemServiceImpl implements PoemService {
             }
             read = read(process.getInputStream());
             logger.info("生成的歌词是:\n{}", read);
-            //java代码中的process.waitFor()返回值为0表示我们调用python脚本成功，
-            //返回值为1表示调用python脚本失败，这和我们通常意义上见到的0与1定义正好相反
         } catch (Exception e) {
             e.printStackTrace();
         }

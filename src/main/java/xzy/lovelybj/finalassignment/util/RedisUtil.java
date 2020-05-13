@@ -193,7 +193,7 @@ public class RedisUtil {
      * @return
      */
     public String getMonthLeaderBoardRedisKey() {
-        return DateUtil.getCurrentYear() + ":month:" +DateUtil.getCurrentWeakInThisYear();
+        return DateUtil.getCurrentYear() + ":month:" +DateUtil.getCurrentMonthInThisYear();
     }
 
 }
