@@ -60,10 +60,10 @@ public class PoemController {
 
     @AddReadTimes
     @GetMapping("info/{id}")
-    public String getInfo(@PathVariable Long id, Model model){
+    public String getInfo(@PathVariable Long id, Model model) {
         PoemDTO info = poemService.getInfo(id);
         TermQueryBuilder unIncludeQueryBuilder = QueryBuilders.termQuery("id", id);
-        List<Poem> otherPoems = poemService.searchByPoetName(info.getPoetName(), info.getDynasty(),unIncludeQueryBuilder, 2);
+        List<Poem> otherPoems = poemService.searchByPoetName(info.getPoetName(), info.getDynasty(), unIncludeQueryBuilder, 2);
         model.addAttribute("poem", info);
         model.addAttribute("other", otherPoems);
         return "/details";
@@ -71,8 +71,14 @@ public class PoemController {
 
     @GetMapping("newPoem")
     @ResponseBody
-    public String getNewPoem(String[] args){
+    public String getNewPoem(String[] args) {
         return poemService.getNewPoem(args);
+    }
+
+    @GetMapping("sendEmail/{id}")
+    @ResponseBody
+    public boolean getNewPoem(@PathVariable Long id, String email, String friendName) {
+        return poemService.sendEmail(id, email, friendName);
     }
 
 
@@ -80,6 +86,6 @@ public class PoemController {
     @ResponseBody
     public String syncData(String url) {
         int size = poemService.syncData(url);
-        return "成功同步"+ size +"首诗";
+        return "成功同步" + size + "首诗";
     }
 }

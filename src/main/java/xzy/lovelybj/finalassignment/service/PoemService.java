@@ -44,4 +44,6 @@ public interface PoemService {
     List<Poem> searchByPoetName(String poetName, String dynasty, TermQueryBuilder unIncludeQueryBuilder, int size);
 
     String getNewPoem(String[] agrs);
+
+    boolean sendEmail(Long id, String email, String friendName);
 }

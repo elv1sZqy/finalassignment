@@ -146,6 +146,33 @@ function reset(history, history2) {
     history2.innerHTML = "<div class=\"footer_list_title\">&nbsp;&nbsp;&nbsp;</div>";
 }
 
+function share(id) {
+    var email = prompt('请输入要发送的邮箱：');
+    if(email == null){
+        alert('你取消了分享！');
+    }else if(email == ''){
+        alert('邮箱为空，请重新输入！');
+    }else{
+        var friendName = prompt('如何称呼好友：');
+        if(friendName == null){
+            alert('你取消了分享！');
+            return;
+        }
+        alert("邮件正在火速放送给好友~~~");
+        $.ajax({
+            //几个参数需要注意一下
+            type: "GET",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/sendEmail/"+id,//url
+            data: {"email":email,"friendName":friendName},
+            complete: function (result) {
+                if (result.status == 200) {
+                    alert("邮件已经成功发送给了"+friendName+"，请您继续欣赏这首诗吧。")
+                };
+            },
+        });
+    }
+}
 
 
 

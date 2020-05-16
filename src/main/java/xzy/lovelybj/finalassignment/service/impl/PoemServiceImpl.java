@@ -14,6 +14,7 @@ import xzy.lovelybj.finalassignment.dto.PoemDTO;
 import xzy.lovelybj.finalassignment.service.PoemService;
 import xzy.lovelybj.finalassignment.util.ESUtil;
 import xzy.lovelybj.finalassignment.util.GainPoemUtil;
+import xzy.lovelybj.finalassignment.util.MailUtil;
 import xzy.lovelybj.finalassignment.util.RedisUtil;
 
 import java.io.BufferedReader;
@@ -37,6 +38,8 @@ public class PoemServiceImpl implements PoemService {
     private GainPoemUtil gainPoemUtil;
     @Autowired
     private RedisUtil redisUtil;
+
+    private static String template = "一首好的古诗推荐给好学的你，这次推荐的是%s的《%s》，希望你能喜欢☺：%s";
 
     @Override
     public List<Poem> search(String searchInput, String dynasty) {
@@ -102,7 +105,7 @@ public class PoemServiceImpl implements PoemService {
     public List<Poem> searchByPoetName(String poetName, String dynasty, TermQueryBuilder unIncludeQueryBuilder, int size) {
         BoolQueryBuilder builder = QueryBuilders.boolQuery();
         // fixme 装好插件以后就把这个去掉
-        builder.must(QueryBuilders.termQuery("poetName", poetName.substring(0, 1)));
+        builder.must(QueryBuilders.termQuery("poetName", poetName));
         builder.must(QueryBuilders.termQuery("dynasty", dynasty));
         builder.mustNot(unIncludeQueryBuilder);
         return esUtil.search(builder, size);
@@ -110,7 +113,7 @@ public class PoemServiceImpl implements PoemService {
 
     @Override
     public String getNewPoem(String[] cis) {
-        String[] args = new String[]{"python", "C:\\Users\\NewB1\\Desktop\\jinglei-master\\__main__.py", "惊雷", "紫电", "乌云", "多情自古空余恨"};
+        String[] args = new String[]{"python", "C:\\Users\\NewB1\\Desktop\\jinglei-master\\__main__.py", "惊雷", "紫电", "乌云", "多情自古空余恨" };
         if (null != cis) {
             for (int i = 0; i < cis.length; i++) {
                 String ci = cis[i];
@@ -147,5 +150,27 @@ public class PoemServiceImpl implements PoemService {
 
         in.close();
         return sb.toString();
+    }
+
+    @Override
+    public boolean sendEmail(Long id, String email, String friendName) {
+        try {
+            PoemDTO info = getInfo(id);
+            String content = packagePoemContent(info);
+            MailUtil.sendMail(email, "为您推荐一首好的古诗", friendName, content);
+        } catch (Exception e) {
+            logger.error("邮件发送失败:{}", e);
+            return false;
+        }
+        return true;
+    }
+
+    private String packagePoemContent(PoemDTO info) {
+        String content = String.format(template, info.getPoetName(), info.getPoemName(), info.getContent());
+        if (StringUtils.isNotBlank(info.getTranslation())) {
+            content += "<br>可能你会看不懂，细心的朋友为你准备了古诗的翻译：" + info.getTranslation();
+        }
+        content += "<br>更多优秀的古诗还请您来<a  href='localhost:8080/index' title=\"全球最强古诗搜索平台\"> 全球最强古诗搜索平台</a>看看";
+        return content;
     }
 }
