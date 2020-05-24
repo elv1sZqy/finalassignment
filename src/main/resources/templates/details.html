@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../static/details/css/style.css">
 </head>
 <body>
-<div class="scene" bgcolor="#E1E0C7">
+<div class="scene" bgcolor="#000000">
     <article class="book">
         <section class="page active">
             <div class="front">
@@ -49,14 +49,20 @@
                 </p>
             </div>
 
-
-            <div class="back">
+            <div class="back" th:if="${#lists.size(other)} > 1">
                 <h1>– <a th:href="@{/info/{id}(id=*{other[0].id})}">[[*{other[0].poemName}]]</a> –</h1>
                 [[*{other[0].content}]]
             </div>
+
+            <div class="back"th:if="${#lists.size(other)} < 2">
+                <h1>– 最后 –</h1>
+                <div class="related">
+                    <h3>《[[${poem.poemName}]]》看完了, 如果觉得不错的话记得分享给好友喔~~~ <a class="htmleaf-icon icon-htmleaf-arrow-forward-outline" href="#" th:onclick="share([[${poem.id}]]);return false;" title="推荐古诗给好友"><span> 推荐古诗给好友</span></a></h3>
+                </div>
+            </div>
         </section>
-        <section class="page">
-            <div class="front">
+        <section class="page" th:if="${#lists.size(other)} > 1">
+            <div class="front" >
                 <h1>- <a th:href="@{/info/{id}(id=*{other[1].id})}">[[*{other[1].poemName}]]</a> -</h1>
                 <h2></h2>
                 [[*{other[1].content}]]
@@ -64,7 +70,7 @@
             <div class="back">
                 <h1>– 最后 –</h1>
                 <div class="related">
-                    <h3>[[${poem.poemName}]]看完了, 你可能还喜欢:<a th:text="其他诗" , th:href="www.baidu.com"></a></h3>
+                    <h3>《[[${poem.poemName}]]》看完了, 如果觉得不错的话记得分享给好友喔~~~ <a class="htmleaf-icon icon-htmleaf-arrow-forward-outline" href="#" th:onclick="share([[${poem.id}]]);return false;" title="推荐古诗给好友"><span> 推荐古诗给好友</span></a></h3>
                 </div>
             </div>
         </section>

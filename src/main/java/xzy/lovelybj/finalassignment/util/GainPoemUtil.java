@@ -37,10 +37,14 @@ public class GainPoemUtil {
         if (!CollectionUtils.isEmpty(links)) {
             List<Poem> poems = new ArrayList<>();
             for (String link : links) {
-                Poem poem = new Poem();
-                SetPoem(link, poem);
-                if (Objects.nonNull(poem)) {
-                    poems.add(poem);
+                try {
+                    Poem poem = new Poem();
+                    SetPoem(link, poem);
+                    if (Objects.nonNull(poem)) {
+                        poems.add(poem);
+                    }
+                } catch (Exception e) {
+                    continue;
                 }
             }
             log.info("一共同步了{}首诗", poems.size());

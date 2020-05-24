@@ -29,6 +29,6 @@ public class RecommendController {
         recommend.forEach(recommendDTO -> tags.add(recommendDTO.getTag()));
         model.addAttribute("recommend", recommend);
         model.addAttribute("tags", tags);
-        return "/recommend";
+        return "recommend";
     }
 }

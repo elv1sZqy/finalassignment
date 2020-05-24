@@ -46,7 +46,7 @@ public class RankServiceImpl implements RankService {
     }
 
     private List<RankDTO> getRankInfo(String weekLeaderBoardRedisKey) {
-        Set<String> rang = redisUtil.getRang(weekLeaderBoardRedisKey, 0, 10);
+        Set<String> rang = redisUtil.getRang(weekLeaderBoardRedisKey, 0, 9);
         TermsQueryBuilder queryBuilder = QueryBuilders.termsQuery("id", rang);
         List<Poem> poems = esUtil.search(queryBuilder, rang.size());
         List<RankDTO> result = new ArrayList<>();

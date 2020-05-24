@@ -27,7 +27,7 @@ public class RankController {
         model.addAttribute("rankList", result);
         model.addAttribute("weekClass", "filter__link is-active");
         model.addAttribute("monthClass", "filter__link ");
-        return "/rank";
+        return "rank";
     }
     @GetMapping("/month")
     public String getMonthRank(Model model) {
@@ -35,6 +35,6 @@ public class RankController {
         model.addAttribute("rankList", result);
         model.addAttribute("monthClass", "filter__link is-active");
         model.addAttribute("weekClass", "filter__link ");
-        return "/rank";
+        return "rank";
     }
 }

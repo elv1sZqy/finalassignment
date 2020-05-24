@@ -27,10 +27,10 @@ function goSearch() {
                     let content = poem.content.split(/[。！？)]/);
                     // 拼接
                     var str = "";
-                    for (let i = 0; i <content.length; i++) {
+                    for (let i = 0; i < content.length; i++) {
                         item = content[i];
                         console.log(i);
-                        if (i > 4){
+                        if (i > 4) {
                             str += "<li class=\"d-flex flex-row align-items-center justify-content-center\">\n" +
                                 "                                            <span>............</span></li>"
                             break;
@@ -47,7 +47,7 @@ function goSearch() {
                         str +
                         "                                    </ul>\n" +
                         "                                </div>\n" +
-                        "                                <div class=\"pricing_button ml-auto mr-auto\"><a href=\"info\\" + poem.id+  "\">查看详情</a></div>\n" +
+                        "                                <div class=\"pricing_button ml-auto mr-auto\"><a href=\"info\\" + poem.id + "\">查看详情</a></div>\n" +
                         "                            </div>\n" +
                         "                        </div>")
                 }
@@ -114,7 +114,7 @@ function createPoem() {
         complete: function (result) {
             if (result.status == 200) {
                 let poem = result.responseText;
-                let isLike = confirm(poem+"\n点击 \"取消\" 再生成一首");
+                let isLike = confirm(poem + "\n点击 \"取消\" 再生成一首");
                 if (!isLike) {
                     createPoem();
                     return;
@@ -126,6 +126,7 @@ function createPoem() {
 
     });
 }
+
 function addPoem(poem, history) {
     let split = poem.split(/[。！？)]/);
     var div = document.createElement("div");
@@ -148,13 +149,13 @@ function reset(history, history2) {
 
 function share(id) {
     var email = prompt('请输入要发送的邮箱：');
-    if(email == null){
+    if (email == null) {
         alert('你取消了分享！');
-    }else if(email == ''){
+    } else if (email == '') {
         alert('邮箱为空，请重新输入！');
-    }else{
+    } else {
         var friendName = prompt('如何称呼好友：');
-        if(friendName == null){
+        if (friendName == null) {
             alert('你取消了分享！');
             return;
         }
@@ -163,12 +164,39 @@ function share(id) {
             //几个参数需要注意一下
             type: "GET",//方法类型
             dataType: "json",//预期服务器返回的数据类型
-            url: "/sendEmail/"+id,//url
-            data: {"email":email,"friendName":friendName},
+            url: "/sendEmail/" + id,//url
+            data: {"email": email, "friendName": friendName},
             complete: function (result) {
                 if (result.status == 200) {
-                    alert("邮件已经成功发送给了"+friendName+"，请您继续欣赏这首诗吧。")
-                };
+                    alert("邮件已经成功发送给了" + friendName + "，请您继续欣赏这首诗吧。")
+                }
+                ;
+            },
+        });
+    }
+}
+
+function uploadPoems() {
+    var url = prompt('请输入需要导入的地址：');
+    if (url == null) {
+        alert('你取消了导入！');
+    } else if (url == '') {
+        alert('地址为空，请重新输入！');
+    } else {
+        alert("古诗正在导入中，请稍等~~~");
+        $.ajax({
+            //几个参数需要注意一下
+            type: "post",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/syncData",
+            data: {"url": url},
+            complete: function (result) {
+                if (result.status == 200) {
+                    var count = result.responseText;
+                    alert("成功导入" + count + "首古诗，您现在已经可以在系统中搜索到他们了~~~！！！")
+                } else {
+                    alert("古诗导入失败(┬＿┬)")
+                }
             },
         });
     }

@@ -66,7 +66,7 @@ public class PoemController {
         List<Poem> otherPoems = poemService.searchByPoetName(info.getPoetName(), info.getDynasty(), unIncludeQueryBuilder, 2);
         model.addAttribute("poem", info);
         model.addAttribute("other", otherPoems);
-        return "/details";
+        return "details";
     }
 
     @GetMapping("newPoem")
@@ -84,8 +84,8 @@ public class PoemController {
 
     @PostMapping("/syncData")
     @ResponseBody
-    public String syncData(String url) {
+    public Integer syncData(String url) {
         int size = poemService.syncData(url);
-        return "成功同步" + size + "首诗";
+        return size;
     }
 }
