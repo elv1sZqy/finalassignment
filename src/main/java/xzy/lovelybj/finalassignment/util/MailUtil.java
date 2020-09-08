@@ -16,8 +16,8 @@ import java.util.Properties;
 */
 public class MailUtil {
 
-    private static String systemEmail = "1120280983@qq.com";
-    private static String password = "hszikkhdcbxrbade";
+    private static String systemEmail = "xxxx@qq.com";
+    private static String password = "xxxx";
     /**
      *
      * @param receive 收信人邮箱地址
